@@ -1,6 +1,15 @@
-const MAX_QUIZ_TIME = 10; // quiz timer in seconds
+const MAX_QUIZ_TIME = 5; // quiz timer in seconds
 var secondsLeft = MAX_QUIZ_TIME;
+var startQuizBtn = document.querySelector("#startQuizBtn");
 
+// This function displays the current time remaining on the 
+// quiz timer (time left).
+function displayTimeRemaining() {
+    console.log("time remaining " + secondsLeft);
+}
+
+// This function starts the quiz timer, monitors for it to run out,
+// displays time remaining.
 function startTestTimer() {
     var timerInterval = setInterval(function() {
       secondsLeft--;
@@ -10,11 +19,16 @@ function startTestTimer() {
         // Timer ran out
         clearInterval(timerInterval);
       } else {
-        console.log("timer continue", secondsLeft);
         // Continue quiz
+        // Display current time remaining
+        displayTimeRemaining();
       }  
   
     }, 1000);
 }
 
-  startTestTimer();
+// Add event listener here for the Start Quiz button
+startQuizBtn.addEventListener("click",function() {
+    startTestTimer();
+    // 
+}) 
