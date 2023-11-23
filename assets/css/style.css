@@ -3,11 +3,7 @@
     color: pink;
   }
 
-  .container {
-    background-color: pink;
-    color:black;
-    text-align:center;
-  }
+  
   button {
     padding: 10px;
     margin: 24px;
@@ -17,10 +13,14 @@
     color: white;
   }
   
-  #timeLeftDisplay {
+  header {
     text-align: right;
     width: 100%;
     background: aqua;
     color: red;
   }
-  
+  .container {
+    background-color: pink;
+    color:black;
+    text-align:center;
+  }
