@@ -3,24 +3,43 @@
     color: pink;
   }
 
-  
-  button {
+    #startQuizBtn {
     padding: 10px;
     margin: 24px;
     cursor: pointer;
     font-size: 24px;
-    background-color: #247BA0;
+    background-color:darkblue;
     color: white;
+    border-radius: 1rem;
   }
   
   header {
-    text-align: right;
-    width: 100%;
+    display: flex;
+    flex-wrap;
     background: aqua;
     color: red;
+    justify-content: space-between;
   }
-  .container {
+
+  header p {
+    margin:0;
+   }
+  .startContainer {
     background-color: pink;
     color:black;
     text-align:center;
+  }
+  .questionContainer {
+  /* diplay:none;*/
+  display:block;
+  }
+
+  #reply1, #reply2, #reply3, #reply4 {
+    display:block;
+    color:white;
+    background-color: darkblue;
+    padding: 10px;
+    font-size:24px;
+    border-radius: 1rem;
+    margin-bottom: .5rem;
   }
