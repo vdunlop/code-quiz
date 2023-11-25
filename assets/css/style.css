@@ -29,11 +29,18 @@
     color:black;
     text-align:center;
   }
-  .questionContainer {
-  /* diplay:none;*/
-  display:block;
-  }
 
+  
+  .questionContainer {
+    display:block;
+  }
+     
+  .questionContainer h2 {
+    background:pink;
+    color:black;
+    font-size: 2rem;
+  }
+  
   #reply1, #reply2, #reply3, #reply4 {
     display:block;
     color:white;
@@ -43,3 +50,5 @@
     border-radius: 1rem;
     margin-bottom: .5rem;
   }
+
+  
