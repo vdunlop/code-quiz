@@ -23,14 +23,14 @@ var currentQuestion = 0;
 var questions = ["Which of the following is NOT a correct variable declaration",
   "Which of the following is NOT a Falsy",
   "Which is NOT a primitive value or primitive data type",
-  "Java Question 4",
-  "Java Question 5"];
-  var answerChoices = [["var x = 1;", "var if;", "var functionName = function(){};", "var z=x+y;"],
-                      ["null","undefined","\"false\"", "-0"],
-                    ["null","object","symbol","string"],
-                    ["1","2","3","4"],
-                    ["answer1","answer2","answer3","answer4"]];
-  var correctAnswers = ["A", "D", "C", "A", "B"];
+  "Which of the following is NOT always required in an if conditional",
+  "Which of the following is NOT true about functions"];
+var answerChoices = [["var x = 1;", "var if;", "var functionName = function(){};", "var z=x+y;"],
+["null", "undefined", "\"false\"", "-0"],
+["null", "object", "symbol", "string"],
+["else", "if", "{}", "conditional statement"],
+["reusable", "you can build your own", "some don't have a return value", "they don't follow scope"]];
+var correctAnswers = ["B", "C", "B", "A", "D"];
 
 // This function displays the current time remaining on the 
 // quiz timer (time left).
@@ -45,7 +45,6 @@ function displayTimeRemaining() {
 // displays time remaining.
 function startTestTimer() {
   var timerInterval = setInterval(function () {
-    secondsLeft--;
 
     if (secondsLeft <= 0) {
       console.log("timer ran out");
@@ -60,9 +59,20 @@ function startTestTimer() {
       displayTimeRemaining();
       //processQuestion();
     }
-
+    secondsLeft--;
   }, 1000);
 }
+
+// This function will reduce the timer for an incorrect answer.
+function processAnswerIncorrect() {
+  console.log("answerincorrect");
+};
+
+// This function sets the <h2> that displays the results of the question.
+// Whether the answer was correct or incorrect.
+function setAnswerStatusText(results) {
+  console.log("setanswerstatustext - results = " + results);
+};
 
 // This section of functions will process answers A through D and determine
 // whether they are correct or not
@@ -70,13 +80,20 @@ function processAnswerA() {
   console.log("Answer A");
   console.log("current question " + currentQuestion);
   console.log(questions[currentQuestion]);
+
+  console.log("processing A not all done");
+  clearScreen();
+  if (correctAnswers[currentQuestion] == "A") {
+    setAnswerStatusText("correct");
+  } else {
+    setAnswerStatusText("incorrect");
+    processAnswerIncorrect();
+  }
+
   currentQuestion++;
   if (currentQuestion >= NUMBER_OF_QUESTIONS) {
     allDoneDisplay();
   } else {
-    console.log("processing A not all done");
-
-    clearScreen();
     processQuestion();
   }
 }
@@ -85,55 +102,110 @@ function processAnswerB() {
   console.log("Answer B");
   console.log("current question " + currentQuestion);
   console.log(questions[currentQuestion]);
+
+  console.log("processing B not all done");
+  clearScreen();
+  if (correctAnswers[currentQuestion] == "B") {
+    setAnswerStatusText("correct");
+  } else {
+    setAnswerStatusText("incorrect");
+    processAnswerIncorrect();
+  }
+
   currentQuestion++;
+  if (currentQuestion >= NUMBER_OF_QUESTIONS) {
+    allDoneDisplay();
+  } else {
+    processQuestion();
+  }
+  /*currentQuestion++;
   if (currentQuestion >= NUMBER_OF_QUESTIONS) {
     allDoneDisplay();
   } else {
     console.log("processing B not all done");
     clearScreen();
     processQuestion();
-  }
+  }*/
+
 }
+
 function processAnswerC() {
   console.log("Answer C");
   console.log("current question " + currentQuestion);
   console.log(questions[currentQuestion]);
+
+  console.log("processing C not all done");
+  clearScreen();
+  if (correctAnswers[currentQuestion] == "C") {
+    setAnswerStatusText("correct");
+  } else {
+    setAnswerStatusText("incorrect");
+    processAnswerIncorrect();
+  }
+
   currentQuestion++;
+  if (currentQuestion >= NUMBER_OF_QUESTIONS) {
+    allDoneDisplay();
+  } else {
+    processQuestion();
+  }
+  /*currentQuestion++;
   if (currentQuestion >= NUMBER_OF_QUESTIONS) {
     allDoneDisplay();
   } else {
     console.log("processing C not all done");
     clearScreen();
     processQuestion();
-  }
+  }*/
 }
 function processAnswerD() {
   console.log("Answer D");
   console.log("current question " + currentQuestion);
   console.log(questions[currentQuestion]);
+
+
+  console.log("processing D not all done");
+  clearScreen();
+  if (correctAnswers[currentQuestion] == "D") {
+    setAnswerStatusText("correct");
+  } else {
+    setAnswerStatusText("incorrect");
+    processAnswerIncorrect();
+  }
+
   currentQuestion++;
+  if (currentQuestion >= NUMBER_OF_QUESTIONS) {
+    allDoneDisplay();
+  } else {
+    processQuestion();
+  }
+  /*currentQuestion++;
   if (currentQuestion >= NUMBER_OF_QUESTIONS) {
     allDoneDisplay();
   } else {
     console.log("processing D not all done");
     clearScreen();
     processQuestion();
-  }
+  }*/
 }
 
 function clearScreen() {
   //debugger;
   console.log("CLEAR SCREEN");
   console.log("current question " + currentQuestion);
-startContainerEl.setAttribute("hidden","true");
-element = document.getElementById('clearContainer');
-if (element.style.display == 'none') {
-  element.style.display = 'block';
-}
-questionContainerEl.setAttribute("hidden", "false");
 
-//.setAttribute('style','display:none;');
-//document.getElementsByClassName('startContainerOn').style.display = 'none';
+  // Turn off the main screen
+  startContainerEl.setAttribute("hidden", "true");
+
+  // Turn on the question container
+  element = document.getElementById('clearContainer');
+  if (element.style.display == 'none') {
+    element.style.display = 'block';
+  }
+  questionContainerEl.setAttribute("hidden", "false");
+
+  //.setAttribute('style','display:none;');
+  //document.getElementsByClassName('startContainerOn').style.display = 'none';
 }
 
 // Display the question on the screen.
@@ -156,7 +228,7 @@ function processQuestion() {
     element = document.getElementById("reply4");
     element.textContent = answerChoices[currentQuestion][3];
 
-    currentQuestion++;
+    // do this in process answer currentQuestion++;
   }
 }
 
@@ -167,12 +239,18 @@ function allDoneDisplay() {
 // Event listener for the Start Quiz button click
 startQuizBtn.addEventListener("click", function (event) {
   event.stopPropagation;
+
+  // Reset variables for the Start Quiz button being clicked a second, etc time
   secondsLeft = MAX_QUIZ_TIME; // Reset the timer.
   currentQuestion = 0;  // Reset the current question.
   //debugger;
-  startContainerEl.setAttribute("hidden","false"); // main screen is visible
+
+  // At start, main screen is visible and all other screens are hidden
+  startContainerEl.setAttribute("hidden", "false"); // main screen is visible
   questionContainerEl.setAttribute("hidden", "true"); // questions are hidden
   clearScreen();
+
+  // Display the first question and start the timer
   processQuestion();
   startTestTimer();
   // 
