@@ -20,14 +20,14 @@ var initialTimeLeftDisplay = timeLeftDisplayEl.textContent;
 // The quiz is stored here;
 const NUMBER_OF_QUESTIONS = 5;
 var currentQuestion = 0;
-var questions = ["Java Question 1",
+var questions = ["Which of the following is NOT a correct variable declaration",
   "Which of the following is NOT a Falsy",
-  "Java Question 3",
+  "Which is NOT a primitive value or primitive data type",
   "Java Question 4",
   "Java Question 5"];
-  var answerChoices = [["strings", "booleans", "alerts", "numbers"],
+  var answerChoices = [["var x = 1;", "var if;", "var functionName = function(){};", "var z=x+y;"],
                       ["null","undefined","\"false\"", "-0"],
-                    ["a1","a2","a3","a4"],
+                    ["null","object","symbol","string"],
                     ["1","2","3","4"],
                     ["answer1","answer2","answer3","answer4"]];
   var correctAnswers = ["A", "D", "C", "A", "B"];
