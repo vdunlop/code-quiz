@@ -28,7 +28,7 @@
   </div>
 
   <!-- Screen for question and answer display -->
-  <div class="questionContainer" id="clearContainer" style="display:none">
+  <div class="questionContainer" id="clearQuestionContainer" style="display:none">
     <h2 id="questionText">Question</h2>
     <button id="reply1">Reply1</button>
     <button id="reply2">Reply2</button>
@@ -37,7 +37,17 @@
     <h2 id="answerStatusText">Results</h2>
   </div>
 
-<!-- Screen for quiz complete -->
+  <!-- Screen for quiz complete -->
+  <div class="allDoneContainer" id="clearAllDoneContainer" style="display:none">
+    <h2>All Done!</h2>
+    <p id="#finalScore">Your final score is: </p>
+    <form>
+      <label for="initials">Enter initials:</label>
+      <input type="text" id="initials" name="initials">
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
   <script src="./assets/js/script.js"></script>
 </body>
 

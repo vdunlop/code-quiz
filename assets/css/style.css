@@ -40,6 +40,15 @@
     color:black;
     font-size: 2rem;
   }
+  .allDoneContainer{
+    display:inline;
+  }
+
+  .allDoneContainer h2{
+    background:pink;
+    color:black;
+    font-size: 2rem;
+  }
   
   #reply1, #reply2, #reply3, #reply4 {
     display:block;

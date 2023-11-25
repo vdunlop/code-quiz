@@ -1,6 +1,7 @@
 // Clearing the screen elements set up. 
 var startContainerEl = document.querySelector(".startContainer");
 var questionContainerEl = document.querySelector(".questionContainer");
+var allDoneContainerEl = document.querySelector(".allDoneContainer");
 
 // Timer values
 const MAX_QUIZ_TIME = 10; // quiz timer in seconds
@@ -66,6 +67,7 @@ function startTestTimer() {
 // This function will reduce the timer for an incorrect answer.
 function processAnswerIncorrect() {
   console.log("answerincorrect");
+  secondsLeft = secondsLeft - 10;
 };
 
 // This function sets the <h2> that displays the results of the question.
@@ -82,7 +84,7 @@ function processAnswerA() {
   console.log(questions[currentQuestion]);
 
   console.log("processing A not all done");
-  clearScreen();
+  clearMainScreen();
   if (correctAnswers[currentQuestion] == "A") {
     setAnswerStatusText("correct");
   } else {
@@ -104,7 +106,7 @@ function processAnswerB() {
   console.log(questions[currentQuestion]);
 
   console.log("processing B not all done");
-  clearScreen();
+  clearMainScreen();
   if (correctAnswers[currentQuestion] == "B") {
     setAnswerStatusText("correct");
   } else {
@@ -123,7 +125,7 @@ function processAnswerB() {
     allDoneDisplay();
   } else {
     console.log("processing B not all done");
-    clearScreen();
+    clearMainScreen();
     processQuestion();
   }*/
 
@@ -135,7 +137,7 @@ function processAnswerC() {
   console.log(questions[currentQuestion]);
 
   console.log("processing C not all done");
-  clearScreen();
+  clearMainScreen();
   if (correctAnswers[currentQuestion] == "C") {
     setAnswerStatusText("correct");
   } else {
@@ -154,7 +156,7 @@ function processAnswerC() {
     allDoneDisplay();
   } else {
     console.log("processing C not all done");
-    clearScreen();
+    clearMainScreen();
     processQuestion();
   }*/
 }
@@ -165,7 +167,7 @@ function processAnswerD() {
 
 
   console.log("processing D not all done");
-  clearScreen();
+  clearMainScreen();
   if (correctAnswers[currentQuestion] == "D") {
     setAnswerStatusText("correct");
   } else {
@@ -184,12 +186,12 @@ function processAnswerD() {
     allDoneDisplay();
   } else {
     console.log("processing D not all done");
-    clearScreen();
+    clearMainScreen();
     processQuestion();
   }*/
 }
 
-function clearScreen() {
+function clearMainScreen() {
   //debugger;
   console.log("CLEAR SCREEN");
   console.log("current question " + currentQuestion);
@@ -198,7 +200,7 @@ function clearScreen() {
   startContainerEl.setAttribute("hidden", "true");
 
   // Turn on the question container
-  element = document.getElementById('clearContainer');
+  element = document.getElementById('clearQuestionContainer');
   if (element.style.display == 'none') {
     element.style.display = 'block';
   }
@@ -208,6 +210,26 @@ function clearScreen() {
   //document.getElementsByClassName('startContainerOn').style.display = 'none';
 }
 
+function clearQuestionScreen() {
+  //debugger;
+  console.log("CLEAR QUESTION SCREEN");
+  console.log("current question " + currentQuestion);
+
+  // Turn off the question screen
+  element - document.getElementById('clearQuestionContainer');
+  element.style.display = 'none';
+  questionContainerEl.setAttribute("hidden", "true");
+
+  // Turn on the all done container
+  element = document.getElementById('clearAllDoneContainer');
+  if (element.style.display == 'none') {
+    element.style.display = 'inline';
+  }
+  allDoneContainerEl.setAttribute("hidden", "false");
+
+  //.setAttribute('style','display:none;');
+  //document.getElementsByClassName('startContainerOn').style.display = 'none';
+}
 // Display the question on the screen.
 function processQuestion() {
 
@@ -234,6 +256,8 @@ function processQuestion() {
 
 function allDoneDisplay() {
   console.log("ALL DONE");
+  clearQuestionScreen();
+  console.log("on all done screen");
 }
 
 // Event listener for the Start Quiz button click
@@ -248,7 +272,8 @@ startQuizBtn.addEventListener("click", function (event) {
   // At start, main screen is visible and all other screens are hidden
   startContainerEl.setAttribute("hidden", "false"); // main screen is visible
   questionContainerEl.setAttribute("hidden", "true"); // questions are hidden
-  clearScreen();
+  allDoneContainerEl.setAttribute("hidden", "true"); // all done is hidden
+  clearMainScreen();
 
   // Display the first question and start the timer
   processQuestion();
