@@ -5,9 +5,11 @@ var allDoneContainerEl = document.querySelector(".allDoneContainer");
 var highScoresContainerEl = document.querySelector(".highScoresContainer");
 
 // Local storage set up.
+var highScorers;  // 2D array for initials and score [initialsA,scoreA],[initialsB,scoreB]
 var numberOfScores = 0;  // number of scores recorded
 var currentFinalScore = 0;
 var currentInitials = "";
+var scoresArr = JSON.parse(localStorage.getItem('scoreList'));
 
 // Timer values
 const MAX_QUIZ_TIME = 300; // quiz timer in seconds
@@ -313,9 +315,32 @@ function allDoneDisplay() {
 function highScoresDisplay() {
   console.log("DISPLAY HIGH SCORES");
 
+  // Hide the all done screen and display the high scores screen
   clearAllDoneScreen();
+
+  // Get the current list of high scores, sort and display the top 5
+  highScorers = localStorage.getItem('scoreList');
+  console.log ("in high score display " + highScorers);
+
   console.log("on high scores screen");
 
+}
+
+// Remove any blank names (initials) elements from the scores array
+function cleanScoresArray() {
+  for (var i = 0; i<scoresArr.length; i++ ) {
+console.log("in for " + i + " " + scoresArr[i]); 
+console.log("in for " + i + " " + scoresArr[i][0]);
+console.log("in for " + i + " " + scoresArr[i][1]);
+if ((scoresArr[i][0] == "") || (scoresArr[i][0] == null)) {
+  console.log('remove the thing');
+  scoresArr.splice(i,i);
+  console.log("spliced " + scoresArr);
+} 
+console.log("out for " + i + " " + scoresArr[i]); 
+console.log("out for " + i + " " + scoresArr[i][0]);
+console.log("out for " + i + " " + scoresArr[i][1]);
+  }
 }
 // Event listener for the Start Quiz button click
 startQuizBtn.addEventListener("click", function (event) {
@@ -327,11 +352,13 @@ startQuizBtn.addEventListener("click", function (event) {
   //debugger;
 
   // At start, main screen is visible and all other screens are hidden
+  // INITIALIZE
   startContainerEl.setAttribute("hidden", "false"); // main screen is visible
   questionContainerEl.setAttribute("hidden", "true"); // questions are hidden
   allDoneContainerEl.setAttribute("hidden", "true"); // all done is hidden
   highScoresContainerEl.setAttribute("hidden", "true");  // high scores is hidden
   clearMainScreen();
+  cleanScoresArray();
 
   // Display the first question and start the timer
   processQuestion();
@@ -361,6 +388,8 @@ function processHighScores() {
 console.log ("in process high scores");
   currentInitials = allDoneContainerEl.children[2].children[0].value;
   //debugger;
+  highScorers.push([currentInitials.toUpperCase(),currentFinalScore]);
+  localStorage.setItem('scoreList',JSON.stringify(highScorers));
   console.log("initials in submit =" + currentInitials);
   //processHighScores();
   clearAllDoneScreen();
