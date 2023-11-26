@@ -3,82 +3,89 @@
     color: pink;
   }
 
-    #startQuizBtn {
+  #startQuizBtn {
     padding: 10px;
     margin: 24px;
     cursor: pointer;
     font-size: 24px;
-    background-color:darkblue;
-    color: white;
-    border-radius: 1rem;
-  }
-  #startQuizBtn:active {
-    background-color: lightblue;
-  }
-  .form-submit-button {
-    background-color:darkblue;
+    background-color: darkblue;
     color: white;
     border-radius: 1rem;
   }
 
-.highScoresContainer button {
-  background-color: darkblue;
-  color: white;
-  border-radius: 1rem;
-}
+  #startQuizBtn:active {
+    background-color: lightblue;
+  }
+
+  #formSubmit{
+    background-color: darkblue;
+    color: white;
+    border-radius: 1rem;
+  }
+
+  .highScoresContainer button {
+    background-color: darkblue;
+    color: white;
+    border-radius: 1rem;
+  }
+
   header {
     display: flex;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
     background: aqua;
     color: red;
     justify-content: space-between;
   }
 
   header p {
-    margin:0;
-   }
+    margin: 0;
+  }
+
   .startContainer {
     background-color: pink;
-    color:black;
-    text-align:center;
+    color: black;
+    text-align: center;
   }
 
-    .questionContainer {
-    display:block;
+  .questionContainer {
+    display: block;
   }
-     
+
   .questionContainer h2 {
-    background:pink;
-    color:black;
+    background: pink;
+    color: black;
     font-size: 2rem;
   }
-  .allDoneContainer{
-    display:inline;
+
+  .allDoneContainer {
+    display: inline;
   }
 
-  .allDoneContainer h2{
-    background:pink;
-    color:black;
+  .allDoneContainer h2 {
+    background: pink;
+    color: black;
     font-size: 2rem;
   }
 
   .highScoresContainer {
-    display:inline;
-    }
+    display: inline;
+  }
 
-    .highScoresContainer h2 {
-      background:pink;
-      color:black;
-      font-size: 2rem;
-    }
-  #reply1, #reply2, #reply3, #reply4 {
-    display:block;
-    color:white;
+  .highScoresContainer h2 {
+    background: pink;
+    color: black;
+    font-size: 2rem;
+  }
+
+  #reply1,
+  #reply2,
+  #reply3,
+  #reply4 {
+    display: block;
+    color: white;
     background-color: darkblue;
     padding: 10px;
-    font-size:24px;
+    font-size: 24px;
     border-radius: 1rem;
     margin-bottom: .5rem;
   }
-
-  

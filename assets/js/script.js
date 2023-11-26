@@ -6,11 +6,13 @@ var highScoresContainerEl = document.querySelector(".highScoresContainer");
 
 // Local storage set up.
 var numberOfScores = 0;  // number of scores recorded
-//var currentFinalScore = localStorage.getItem("currentFinalScore");
+var currentFinalScore = 0;
+var currentInitials = "";
 
 // Timer values
 const MAX_QUIZ_TIME = 300; // quiz timer in seconds
 var secondsLeft = MAX_QUIZ_TIME;
+var stopTimer = false;  // set to true when quiz is complete before timer is up
 
 // Buttons we will listen for.
 var startQuizBtn = document.querySelector("#startQuizBtn");
@@ -18,7 +20,7 @@ var answerABtn = document.querySelector("#reply1");
 var answerBBtn = document.querySelector("#reply2");
 var answerCBtn = document.querySelector("#reply3");
 var answerDBtn = document.querySelector("#reply4");
-var formSubmitBtn = document.querySelector("#initialsForm");
+var formSubmitBtn = document.querySelector("#formSubmit");
 var goBackBtn = document.querySelector("#goBack");
 var clearHighScoresBtn = document.querySelector("#clearHighScores");
 
@@ -55,18 +57,24 @@ function displayTimeRemaining() {
 function startTestTimer() {
   var timerInterval = setInterval(function () {
 
-    if (secondsLeft <= 0) {
-      console.log("timer ran out");
-      // Timer ran out
+    if (stopTimer) {
+      console.log("stop timer");
       clearInterval(timerInterval);
-      // Clear Timer display - set to zero
       timeLeftDisplayEl.textContent = initialTimeLeftDisplay + secondsLeft;
-      allDoneDisplay();
     } else {
-      // Continue quiz
-      // Display current time remaining
-      displayTimeRemaining();
-      //processQuestion();
+      if (secondsLeft <= 0) {
+        console.log("timer ran out");
+        // Timer ran out
+        clearInterval(timerInterval);
+        // Clear Timer display - set to zero
+        timeLeftDisplayEl.textContent = initialTimeLeftDisplay + secondsLeft;
+        allDoneDisplay();
+      } else {
+        // Continue quiz
+        // Display current time remaining
+        displayTimeRemaining();
+        //processQuestion();
+      }
     }
     secondsLeft--;
   }, 1000);
@@ -286,17 +294,28 @@ function processQuestion() {
 
 function allDoneDisplay() {
   console.log("ALL DONE");
+
+  // Clear questions and display all done screen.
   clearQuestionScreen();
   console.log("on all done screen");
-
+  //debugger;
 
   // Set the score and stop the timer
-
+  currentFinalScore = secondsLeft;
+  stopTimer = true;
+  startTestTimer();
+  //allDoneContainerEl.children[3].children[0].textContent = currentFinalScore;
+  element = allDoneContainerEl.getElementsByClassName("finalScore");
+  //getattributesbydocument.getElementById("finalScore");
+  element[0].textContent = currentFinalScore;
 }
 
 function highScoresDisplay() {
   console.log("DISPLAY HIGH SCORES");
+
   clearAllDoneScreen();
+  console.log("on high scores screen");
+
 }
 // Event listener for the Start Quiz button click
 startQuizBtn.addEventListener("click", function (event) {
@@ -317,6 +336,7 @@ startQuizBtn.addEventListener("click", function (event) {
   // Display the first question and start the timer
   processQuestion();
   startTestTimer();
+  //debugger;
 })
 
 // Event listenters for answer buttons clicked.
@@ -337,16 +357,19 @@ answerDBtn.addEventListener("click", function (event) {
   processAnswerD();
 })
 
-function processHighScores(){
-  console.log ("in process high scores");
-  debugger;
-};
-formSubmitBtn.addEventListener("submit", function (event) {
-  event.stopPropagation();
+function processHighScores() {
+console.log ("in process high scores");
+  currentInitials = allDoneContainerEl.children[2].children[0].value;
+  //debugger;
+  console.log("initials in submit =" + currentInitials);
   //processHighScores();
-  var x = document.getElementById("#initials").value;
-  console.log("initials in submit =" + x);
-  processHighScores();
   clearAllDoneScreen();
   highScoresDisplay();
-});
+
+};
+
+ formSubmitBtn.addEventListener("click", function (event) {
+  event.stopPropagation();
+  processHighScores();
+ });
+
