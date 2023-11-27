@@ -18,6 +18,14 @@ var stopTimer = false;  // set to true when quiz is complete before timer is up
 var timeLeftDisplayEl = document.getElementById("#timeLeftDisplay");
 var initialTimeLeftDisplay = timeLeftDisplayEl.textContent;
 
+// High scores for display
+var listEl = document.getElementById("highScoreList");
+var li1 = document.createElement("li");
+var li2 = document.createElement("li");
+var li3 = document.createElement("li");
+var li4 = document.createElement("li");
+var li5 = document.createElement("li");
+
 // Buttons we will listen for.
 var startQuizBtn = document.querySelector("#startQuizBtn");
 var answerABtn = document.querySelector("#reply1");
@@ -327,14 +335,26 @@ function highScoresDisplay() {
 
   // Hide the all done screen and display the high scores screen
   clearAllDoneScreen();
-
+debugger;
   // Get the current list of high scores, sort and display the top 5
-  highScorersArr = localStorage.getItem('scoreList');
+  highScorersArr = JSON.parse(localStorage.getItem('scoreList'));
   console.log ("in high score display " + highScorersArr);
 
   console.log("on high scores screen");
   //var sortedHighScorersArr = highScorersArr.toSorted();
     //highScorersArr.sort(firstItem,SecondItem)=> firstIem.grade - secondItem.grade);
+li1.textContent = highScorersArr[0];
+li2.textContent = highScorersArr[1];
+li3.textContent = highScorersArr[2];
+li4.textContent = highScorersArr[3];
+li5.textContent = highScorersArr[4];
+
+listEl.appendChild(li1);
+listEl.appendChild(li2);
+listEl.appendChild(li3);
+listEl.appendChild(li4);
+listEl.appendChild(li5);
+
 }
 
 // Remove any blank names (initials) elements from the scores array

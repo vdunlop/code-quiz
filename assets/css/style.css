@@ -1,6 +1,6 @@
   body {
     background-color: white;
-    color: pink;
+    color: black;
   }
 
   /* Buttons */
@@ -47,8 +47,8 @@
   header {
     display: flex;
     flex-wrap: wrap;
-    background: aqua;
-    color: red;
+    background: white;
+    color: black;
     justify-content: space-between;
   }
 
@@ -59,7 +59,7 @@
   /* Different "screens": main screen, question and answer screen, quiz complete screen,
     high scores screen. This provides the visibiilty of the screens in addition to their style */
   .startContainer {
-    background-color: pink;
+    background-color: white;
     color: black;
     text-align: center;
   }
@@ -69,7 +69,7 @@
   }
 
   .questionContainer h2 {
-    background: pink;
+    background: white;
     color: black;
     font-size: 2rem;
   }
@@ -79,7 +79,7 @@
   }
 
   .allDoneContainer h2 {
-    background: pink;
+    background: white;
     color: black;
     font-size: 2rem;
   }
@@ -89,7 +89,7 @@
   }
 
   .highScoresContainer h2 {
-    background: pink;
+    background: white;
     color: black;
     font-size: 2rem;
   }
