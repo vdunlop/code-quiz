@@ -224,7 +224,9 @@ function clearMainScreen() {
   console.log("CLEAR SCREEN");
   console.log("current question " + currentQuestion);
 
-  // Turn off the main screen
+  // turn off main screen
+  element = document.getElementById('clearMainContainer');
+  element.style.display = 'none';
   startContainerEl.setAttribute("hidden", "true");
 
   // Turn on the question container
@@ -359,48 +361,52 @@ function highScoresDisplay() {
 
 // Remove any blank names (initials) elements from the scores array
 function cleanScorersArray() {
-  for (var i = 0; i < highScorersArr.length; i++) {
-    console.log("in for " + i + " " + highScorersArr[i]);
-    console.log("in for " + i + " " + highScorersArr[i][0]);
-    console.log("in for " + i + " " + highScorersArr[i][1]);
-    if ((highScorersArr[i][0] == "") || (highScorersArr[i][0] == null)) {
-      console.log('remove the thing');
-      highScorersArr.splice(i, i);
-      console.log("spliced " + highScorersArr);
-    }
-    console.log("out for " + i + " " + highScorersArr[i]);
-    console.log("out for " + i + " " + highScorersArr[i][0]);
-    console.log("out for " + i + " " + highScorersArr[i][1]);
-  }
-}
+  debugger;
 
-function sortScorersArray(){
-var sortColumn = 1;  // Sort by score column.
-console.log(highScorersArr);
-//debugger;
-highScorersArr.sort (
- /*   function (a, b) {
-        if (a[sortColumn] === b[sortColumn]) {
-            return 0;
-        } else {
-            return (b[sortColumn] < a[sortColumn]) ? -1 : 1;
-        }
-    }*/
+  
+    for (var i = 0; i < highScorersArr.length; i++) {
+      console.log("in for " + i + " " + highScorersArr[i]);
+      console.log("in for " + i + " " + highScorersArr[i][0]);
+      console.log("in for " + i + " " + highScorersArr[i][1]);
+      if ((highScorersArr[i][0] == "") || (highScorersArr[i][0] == null)) {
+        console.log('remove the thing');
+        highScorersArr.splice(i, i);
+        console.log("spliced " + highScorersArr);
+      }
+      console.log("out for " + i + " " + highScorersArr[i]);
+      console.log("out for " + i + " " + highScorersArr[i][0]);
+      console.log("out for " + i + " " + highScorersArr[i][1]);
+    }
+  }
+
+
+function sortScorersArray() {
+  var sortColumn = 1;  // Sort by score column.
+  console.log(highScorersArr);
+  //debugger;
+  highScorersArr.sort(
+    /*   function (a, b) {
+           if (a[sortColumn] === b[sortColumn]) {
+               return 0;
+           } else {
+               return (b[sortColumn] < a[sortColumn]) ? -1 : 1;
+           }
+       }*/
 
     function (a, b) {
-      if (a[sortColumn] === b[sortColumn]){
+      if (a[sortColumn] === b[sortColumn]) {
         return 0;
       }
-      if (a[sortColumn] > b[sortColumn]){
+      if (a[sortColumn] > b[sortColumn]) {
         return -1;
       }
-      if (a[sortColumn] <= b[sortColumn]){
+      if (a[sortColumn] <= b[sortColumn]) {
         return 1;
       }
     }
 
-    );
-    console.log(highScorersArr);
+  );
+  console.log(highScorersArr);
 
 }
 
@@ -423,21 +429,31 @@ function processHighScores() {
 
 };
 
-function processGoBack () {
+function processGoBack() {
   debugger;
-  initialize();
+
+  // Turn off the high scores screen
+  element = document.getElementById('clearHighScoresContainer');
+  element.style.display = 'none';
+  highScoresContainerEl.setAttribute("hidden", "true");
+
+  // Turn on the main container
+  element = document.getElementById('clearMainContainer');
+  element.style.display = 'block';
+
+  startContainerEl.setAttribute("hidden", "false");
 }
 
 function processClearHighScores() {
   localStorage.removeItem('scoreList');
-  initialize();
+  processGoBack();
 }
 
-function initialize() {
+/*function initialize() {
    // Reset variables for the Start Quiz button being clicked a second, etc time
    secondsLeft = MAX_QUIZ_TIME; // Reset the timer.
    currentQuestion = 0;  // Reset the current question.
-   debugger;
+   //debugger;
  
    // At start, main screen is visible and all other screens are hidden
    // INITIALIZE
@@ -452,14 +468,47 @@ function initialize() {
   processQuestion();
   startTestTimer();
   //debugger;
-}
+}*/
 
 // EVENT LISTENERS
 // Event listener for the Start Quiz button click
-  startQuizBtn.addEventListener("click", function (event) {
+startQuizBtn.addEventListener("click", function (event) {
   event.stopPropagation;
-  initialize();
- 
+  //initialize();
+  // Reset variables for the Start Quiz button being clicked a second, etc time
+  secondsLeft = MAX_QUIZ_TIME; // Reset the timer.
+  currentQuestion = 0;  // Reset the current question.
+  debugger;
+
+  // At start, main screen is visible and all other screens are hidden
+  // INITIALIZE
+  // Turn on the main container
+  element = document.getElementById('clearMainContainer');
+  element.style.display = 'block';
+  startContainerEl.setAttribute("hidden", "false"); // main screen is visible
+
+  questionContainerEl.setAttribute("hidden", "true"); // questions are hidden
+
+  allDoneContainerEl.setAttribute("hidden", "true"); // all done is hidden
+
+  highScoresContainerEl.setAttribute("hidden", "true");  // high scores is hidden
+
+  // if the local storage is empty, do nothing, otherwise get the scores from local storage
+  var temp = localStorage.getItem('scoreList');
+  if (temp == null){
+    console.log("getitem null");
+
+  } else{
+  highScorersArr = JSON.parse(localStorage.getItem('scoreList'));
+  cleanScorersArray();
+  }
+
+  // Clear main and display Question screens
+  clearMainScreen();
+  // Display the first question and start the timer
+  processQuestion();
+  startTestTimer();
+  //debugger; 
 })
 
 // Event listenters for answer buttons clicked.
