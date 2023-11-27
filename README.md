@@ -2,15 +2,17 @@
 The Coding Quiz is an interactive short quiz on beginner JavaScript with a timer as the score. 
 
 ## Description
-This password generator will prompt you for the following to generate a password:
+This short quiz will:
 
-How many characters would you like in your password (min = 8; max = 128)?
-Would you like uppercase letters in your password?
-Would you like lowercase letters in your password?
-Would you like single-digit numbers in your password?
-Would you like special characters in your password?
+    *Present the user with 5 questions with 4 answer choices.
 
-Given this information, the password generator will generate a password of your specified length with letters, numbers and special characters randomly generated and built into your password. The password will be output to your screen.
+    *Remove 10 seconds from the timer for each incorrect answer.
+
+    *Take initials as input and store scores with initials in local storage.
+
+    *Present the top 5 scores after the initials are entered.
+
+    *Clear the top scores.
 
 ## User Story
 AS A coding boot camp student
@@ -43,35 +45,38 @@ WHEN the game is over
 THEN I can save my initials and score
 
 ### Mock Up
-Screenshot of the website with a password generated.
-![Alt text](./assets/images/code_quiz.png)
+Screenshot of the main page of code quiz.
+![Alt text](./assets/images/code-quiz-main.jpg)
 
-Example of prompt.
-![Alt text](./assets/images/password-generator-prompt.png)
+Screenshot of a question display.
+![Alt text](./assets/images/code-quiz-question.jpg)
 
-Example of an alert.
-![Alt text](./assets/images/password-generator-alert.png)
+Screenshot of the all done display.
+![Alt text](./assets/images/code-quiz-all-done-1.jpg)
+
+Screenshot of the all done with initials entered display.
+![Alt text](./assets/images/code-quiz-all-done.jpg)
+
+Screenshot of the high scores display.
+![Alt text](./assets/images/code-quiz-high-scores.jpg)
 
 ## Installation/Execution
-https://vdunlop.github.io/password-generator/
+https://vdunlop.github.io/code-quiz/
 
-The password generator has a button that will need to be pushed to start the process. After you click on the button labeled "Generate Password", you will be prompted for password requirements.
+Starting the code quiz will present the user with the main screen and a button labeled Start Quiz. By clicking on Start Quiz, the timer will be set and started and the quiz questions will start displaying on the screen.
 
-Password Length - password length must be a number between 8 and 128. If you enter a number out of bounds, you will receive an alert and you will need to start over.
+When a quiz answer is clicked, the answer will be validated and the next question will be displayed on the screen.
 
-Prompt for Uppercase Letter Inclusion - this prompt requires an answer of 'y', 'Y', 'n', or 'N'. If you specify a different value or no value, you will receive an alert and you will need to start over.
+When the timer runs to 0, the quiz will be stopped, the timer/score will be set to 0 and the user will be prompted to enter their initials for score storage.
 
-Prompt for Lowercase Letter Inclusion - this prompt requires an answer of 'y', 'Y', 'n', or 'N'. If you specify a different value or no value, you will receive an alert and you will need to start over.
+When the quiz is complete, without the timer running out, the score will be set to the current timer. The timer will be stopped and the user will be prompted to enter their initials for score storage.
 
-Prompt for Single-digit Number Inclusion - this prompt requires an answer of 'y', 'Y', 'n', or 'N'. If you specify a different value or no value, you will receive an alert and you will need to start over.
-
-Prompt for Special Character Inclusion - this prompt requires an answer of 'y', 'Y', 'n', or 'N'. If you specify a different value or no value, you will receive an alert and you will need to start over.
-
-The generated password will include characters of the types above that you respond 'y' or 'Y' to. If you respond 'n' or 'N' to all prompts, you will receive an alert and you will need to start over.
-
+When the user enters their initials into the form, the user's initials and score will be added to local storage. Then the high scores display will show the top 5 scores with initials.
 
 ## Usage
-When you open the password generator window, you will be able to click on the "Generate Password" button to design and generate a password that is based on random number generation to choose its contents.
+When you open the code quiz, you will be able to click on the "Start Quiz" button to start taking the beginner JavaScript quiz. As you answer the questions, you will see an indication of whether your choice was Correct or Incorrect. Each incorrect answer will deduct 10 seconds off of the timer. The final timer setting will be your score. When the quiz is complete, you will be asked to enter your initials. Your initials and score will be stored in local storage so that previous scores can be seen in a list of the top 5 scores.
+
+There will be a countdown timer displayed in the upper left corner for your information.
 
 ## Credits
 

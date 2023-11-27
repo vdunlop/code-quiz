@@ -335,11 +335,11 @@ function highScoresDisplay() {
 
   // Hide the all done screen and display the high scores screen
   clearAllDoneScreen();
-  debugger;
+  //debugger;
   // Get the current list of high scores, sort and display the top 5
   highScorersArr = JSON.parse(localStorage.getItem('scoreList'));
   console.log("in high score display " + highScorersArr);
-
+  sortScorersArray();
   console.log("on high scores screen");
 
   // Create <li>s for the top 5 scorers
@@ -354,7 +354,7 @@ function highScoresDisplay() {
   listEl.appendChild(li3);
   listEl.appendChild(li4);
   listEl.appendChild(li5);
-  listEl.setAttribute("style", "background-color:lightblue; color:black;font-size:1.5rem;padding:.5rem");
+  listEl.setAttribute("style", "background-color:lightblue;color:black;font-size:1.5rem;margin:1rem");
 }
 
 // Remove any blank names (initials) elements from the scores array
@@ -374,11 +374,41 @@ function cleanScorersArray() {
   }
 }
 
+function sortScorersArray(){
+var sortColumn = 1;  // Sort by score column.
+console.log(highScorersArr);
+//debugger;
+highScorersArr.sort (
+ /*   function (a, b) {
+        if (a[sortColumn] === b[sortColumn]) {
+            return 0;
+        } else {
+            return (b[sortColumn] < a[sortColumn]) ? -1 : 1;
+        }
+    }*/
+
+    function (a, b) {
+      if (a[sortColumn] === b[sortColumn]){
+        return 0;
+      }
+      if (a[sortColumn] > b[sortColumn]){
+        return -1;
+      }
+      if (a[sortColumn] <= b[sortColumn]){
+        return 1;
+      }
+    }
+
+    );
+    console.log(highScorersArr);
+
+}
+
 /* Save the current score and initials into local storage */
 function processHighScores() {
   console.log("in process high scores");
   currentInitials = allDoneContainerEl.children[2].children[0].value;
-  debugger;
+  //debugger;
 
   // put current score and initials into the high scorers array and push it onto local storage
   // for future use.
@@ -394,6 +424,7 @@ function processHighScores() {
 };
 
 function processGoBack () {
+  debugger;
   initialize();
 }
 
@@ -406,7 +437,7 @@ function initialize() {
    // Reset variables for the Start Quiz button being clicked a second, etc time
    secondsLeft = MAX_QUIZ_TIME; // Reset the timer.
    currentQuestion = 0;  // Reset the current question.
-   //debugger;
+   debugger;
  
    // At start, main screen is visible and all other screens are hidden
    // INITIALIZE
