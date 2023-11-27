@@ -6,18 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link rel="stylesheet" href="./assets/css/style.css" />
-  <title>Timed Test</title>
+  <title>Coding Quiz</title>
 </head>
 
 <body>
 
+  <!-- Contains the timer and a link to the high scores-->
   <header>
-    <a href="https://google.com">View High Scores</a>
+   <!-- <a href="https://google.com">View High Scores</a>-->
+   <button id="viewHighScores">View High Scores</button>
     <!-- Add View high scores button here-->
     <p id="#timeLeftDisplay">Time: </p>
   </header>
 
-  <!-- Main Screen -->
+  <!-- Main Screen - contains the start quiz button -->
   <div class=startContainer id="clearMainContainer">
     <h1>Coding Quiz Challenge</h1>
     <p>Try to answer the following code-related questions within the time limit.</p>
@@ -37,7 +39,8 @@
     <h2 id="answerStatusText">Results</h2>
   </div>
 
-  <!-- Screen for quiz complete -->
+  <!-- Screen for quiz complete - all done and room for entering initials to be stored
+  with the score -->
   <div class="allDoneContainer" id="clearAllDoneContainer" style="display:none">
     <h2>All Done!</h2>
     <p id="#finalScore">
@@ -53,13 +56,17 @@
     <button id="formSubmit">Submit</button>
   </div>
 
-  <!-- Screen for high scores -->
+  <!-- Screen for high scores - lists top scores by adding <li> in the <ol>-->
   <div class="highScoresContainer" id="clearHighScoresContainer" style="display:none">
     <h2>High Scores</h2>
     <ol id="highScoreList">
     </ol>
     <h2 id="answerStatusText">Results</h2>
+
+    <!-- go back to the main screen -->
     <button id="goBack">Go Back</button>
+
+    <!-- remove the local storage of the scores -->
     <button id="clearHighScores">Clear High Scores</button>
   </div>
 

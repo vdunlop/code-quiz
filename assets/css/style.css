@@ -41,7 +41,13 @@
     font-size: 24px;
     border-radius: 1rem;
     margin-bottom: .5rem;
-    /*width: 100%;*/
+  }
+
+  #viewHighScores {
+    border-radius: 0;
+    color:red;
+    border:0;
+    background-color: white;
   }
 
   /* Header aesthetics */

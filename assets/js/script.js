@@ -13,6 +13,7 @@ var scoresLS = JSON.parse(localStorage.getItem('scoreList'));
 
 // Timer values
 const MAX_QUIZ_TIME = 300; // quiz timer in seconds
+const SECONDS_OFF_FOR_WRONG_ANSWER = 10;
 var secondsLeft = MAX_QUIZ_TIME;
 var stopTimer = false;  // set to true when quiz is complete before timer is up
 var timeLeftDisplayEl = document.getElementById("#timeLeftDisplay");
@@ -35,6 +36,7 @@ var answerDBtn = document.querySelector("#reply4");
 var formSubmitBtn = document.querySelector("#formSubmit");
 var goBackBtn = document.querySelector("#goBack");
 var clearHighScoresBtn = document.querySelector("#clearHighScores");
+var viewHighScoresBtn = document.querySelector("#viewHighScores");
 
 // The quiz is stored here;
 const NUMBER_OF_QUESTIONS = 5;
@@ -54,9 +56,6 @@ var correctAnswers = ["B", "C", "B", "A", "D"];
 // This function displays the current time remaining on the 
 // quiz timer (time left, upper left corner).
 function displayTimeRemaining() {
-  //   debugger;
-  //   console.log("time remaining " + secondsLeft);
-  //   console.log("element " + timeLeftDisplayEl);
   timeLeftDisplayEl.textContent = initialTimeLeftDisplay + secondsLeft;
 }
 
@@ -92,7 +91,7 @@ function startTestTimer() {
 // This function will reduce the timer for an incorrect answer.
 function processAnswerIncorrect() {
   console.log("answerincorrect");
-  secondsLeft = secondsLeft - 10;
+  secondsLeft = secondsLeft - SECONDS_OFF_FOR_WRONG_ANSWER;
 };
 
 // This function sets the <h2> that displays the results of the question.
@@ -147,14 +146,6 @@ function processAnswerB() {
   } else {
     processQuestion();
   }
-  /*currentQuestion++;
-  if (currentQuestion >= NUMBER_OF_QUESTIONS) {
-    allDoneDisplay();
-  } else {
-    console.log("processing B not all done");
-    clearMainScreen();
-    processQuestion();
-  }*/
 }
 
 function processAnswerC() {
@@ -177,14 +168,7 @@ function processAnswerC() {
   } else {
     processQuestion();
   }
-  /*currentQuestion++;
-  if (currentQuestion >= NUMBER_OF_QUESTIONS) {
-    allDoneDisplay();
-  } else {
-    console.log("processing C not all done");
-    clearMainScreen();
-    processQuestion();
-  }*/
+  
 }
 function processAnswerD() {
   console.log("Answer D");
@@ -207,20 +191,12 @@ function processAnswerD() {
   } else {
     processQuestion();
   }
-  /*currentQuestion++;
-  if (currentQuestion >= NUMBER_OF_QUESTIONS) {
-    allDoneDisplay();
-  } else {
-    console.log("processing D not all done");
-    clearMainScreen();
-    processQuestion();
-  }*/
+  
 }
 
 /* This set of functions process clearing all of the different screens:
 main, question and answer, all done screen, high scores */
 function clearMainScreen() {
-  //debugger;
   console.log("CLEAR SCREEN");
   console.log("current question " + currentQuestion);
 
@@ -236,12 +212,9 @@ function clearMainScreen() {
   }
   questionContainerEl.setAttribute("hidden", "false");
 
-  //.setAttribute('style','display:none;');
-  //document.getElementsByClassName('startContainerOn').style.display = 'none';
-}
+ }
 
 function clearQuestionScreen() {
-  //debugger;
   console.log("CLEAR QUESTION SCREEN");
   console.log("current question " + currentQuestion);
 
@@ -257,12 +230,9 @@ function clearQuestionScreen() {
   }
   allDoneContainerEl.setAttribute("hidden", "false");
 
-  //.setAttribute('style','display:none;');
-  //document.getElementsByClassName('startContainerOn').style.display = 'none';
-}
+ }
 
 function clearAllDoneScreen() {
-  //debugger;
   console.log("CLEAR ALL DONE SCREEN");
   console.log("current question " + currentQuestion);
 
@@ -278,8 +248,7 @@ function clearAllDoneScreen() {
   }
   highScoresContainerEl.setAttribute("hidden", "false");
 
-  //.setAttribute('style','display:none;');
-  //document.getElementsByClassName('startContainerOn').style.display = 'none';
+ 
 }
 
 /* This set of functions process displaying all of the different screens:
@@ -295,7 +264,7 @@ function processQuestion() {
     console.log(" PROCESS NEXT QUESTION");
     console.log("displaying question " + currentQuestion);
     console.log("display question" + questions[currentQuestion]);
-    //debugger;
+ 
     // set up question
     element = document.getElementById("questionText");
     element.textContent = questions[currentQuestion];
@@ -310,7 +279,6 @@ function processQuestion() {
     element = document.getElementById("reply4");
     element.textContent = answerChoices[currentQuestion][3];
 
-    // do this in process answer currentQuestion++;
   }
 }
 
@@ -320,15 +288,12 @@ function allDoneDisplay() {
   // Clear questions and display all done screen.
   clearQuestionScreen();
   console.log("on all done screen");
-  //debugger;
 
   // Set the score and stop the timer
   currentFinalScore = secondsLeft;
   stopTimer = true;
   startTestTimer();
-  //allDoneContainerEl.children[3].children[0].textContent = currentFinalScore;
   element = allDoneContainerEl.getElementsByClassName("finalScore");
-  //getattributesbydocument.getElementById("finalScore");
   element[0].textContent = currentFinalScore;
 }
 
@@ -337,7 +302,6 @@ function highScoresDisplay() {
 
   // Hide the all done screen and display the high scores screen
   clearAllDoneScreen();
-  //debugger;
   // Get the current list of high scores, sort and display the top 5
   highScorersArr = JSON.parse(localStorage.getItem('scoreList'));
   console.log("in high score display " + highScorersArr);
@@ -361,37 +325,27 @@ function highScoresDisplay() {
 
 // Remove any blank names (initials) elements from the scores array
 function cleanScorersArray() {
-  debugger;
-
-  
-    for (var i = 0; i < highScorersArr.length; i++) {
-      console.log("in for " + i + " " + highScorersArr[i]);
-      console.log("in for " + i + " " + highScorersArr[i][0]);
-      console.log("in for " + i + " " + highScorersArr[i][1]);
-      if ((highScorersArr[i][0] == "") || (highScorersArr[i][0] == null)) {
-        console.log('remove the thing');
-        highScorersArr.splice(i, i);
-        console.log("spliced " + highScorersArr);
-      }
-      console.log("out for " + i + " " + highScorersArr[i]);
-      console.log("out for " + i + " " + highScorersArr[i][0]);
-      console.log("out for " + i + " " + highScorersArr[i][1]);
+var arrLength = highScorersArr.length;
+  for (var i = 0; i < arrLength; i++) {
+    console.log("in for " + i + " " + highScorersArr);
+    console.log("in for " + i + " " + highScorersArr[i][0]);
+    console.log("in for " + i + " " + highScorersArr[i][1]);
+    if ((highScorersArr[i][0] == "") || (highScorersArr[i][0] == null)) {
+      console.log('remove the thing');
+      highScorersArr.splice(i, i);
+      console.log("spliced " + highScorersArr);
+      arrLength--;
     }
+    console.log("out for " + i + " " + highScorersArr);
   }
+}
 
 
 function sortScorersArray() {
   var sortColumn = 1;  // Sort by score column.
   console.log(highScorersArr);
-  //debugger;
   highScorersArr.sort(
-    /*   function (a, b) {
-           if (a[sortColumn] === b[sortColumn]) {
-               return 0;
-           } else {
-               return (b[sortColumn] < a[sortColumn]) ? -1 : 1;
-           }
-       }*/
+   
 
     function (a, b) {
       if (a[sortColumn] === b[sortColumn]) {
@@ -414,14 +368,12 @@ function sortScorersArray() {
 function processHighScores() {
   console.log("in process high scores");
   currentInitials = allDoneContainerEl.children[2].children[0].value;
-  //debugger;
 
   // put current score and initials into the high scorers array and push it onto local storage
   // for future use.
   highScorersArr.push([currentInitials, currentFinalScore]);
   localStorage.setItem('scoreList', JSON.stringify(highScorersArr));
   console.log("initials in submit =" + currentInitials);
-  //processHighScores();
 
   // display the high scores
   clearAllDoneScreen();
@@ -429,8 +381,21 @@ function processHighScores() {
 
 };
 
+function processViewHighScores(){
+ // Turn off the displays
+ debugger;
+ element = document.getElementById('clearMainContainer');
+ element.style.display = 'none';
+ startContainerEl.setAttribute("hidden", "true"); // main screen is visible
+
+ questionContainerEl.setAttribute("hidden", "true"); // questions are hidden
+
+ allDoneContainerEl.setAttribute("hidden", "true"); // all done is hidden
+
+ //highScoresContainerEl.setAttribute("hidden", "true");  // high scores is hidden
+ highScoresDisplay();
+}
 function processGoBack() {
-  debugger;
 
   // Turn off the high scores screen
   element = document.getElementById('clearHighScoresContainer');
@@ -449,36 +414,13 @@ function processClearHighScores() {
   processGoBack();
 }
 
-/*function initialize() {
-   // Reset variables for the Start Quiz button being clicked a second, etc time
-   secondsLeft = MAX_QUIZ_TIME; // Reset the timer.
-   currentQuestion = 0;  // Reset the current question.
-   //debugger;
- 
-   // At start, main screen is visible and all other screens are hidden
-   // INITIALIZE
-   startContainerEl.setAttribute("hidden", "false"); // main screen is visible
-   questionContainerEl.setAttribute("hidden", "true"); // questions are hidden
-   allDoneContainerEl.setAttribute("hidden", "true"); // all done is hidden
-   highScoresContainerEl.setAttribute("hidden", "true");  // high scores is hidden
-   clearMainScreen();
-   highScorersArr = JSON.parse(localStorage.getItem('scoreList'));
-   cleanScorersArray();
-    // Display the first question and start the timer
-  processQuestion();
-  startTestTimer();
-  //debugger;
-}*/
-
 // EVENT LISTENERS
 // Event listener for the Start Quiz button click
 startQuizBtn.addEventListener("click", function (event) {
   event.stopPropagation;
-  //initialize();
   // Reset variables for the Start Quiz button being clicked a second, etc time
   secondsLeft = MAX_QUIZ_TIME; // Reset the timer.
   currentQuestion = 0;  // Reset the current question.
-  debugger;
 
   // At start, main screen is visible and all other screens are hidden
   // INITIALIZE
@@ -495,12 +437,12 @@ startQuizBtn.addEventListener("click", function (event) {
 
   // if the local storage is empty, do nothing, otherwise get the scores from local storage
   var temp = localStorage.getItem('scoreList');
-  if (temp == null){
+  if (temp == null) {
     console.log("getitem null");
 
-  } else{
-  highScorersArr = JSON.parse(localStorage.getItem('scoreList'));
-  cleanScorersArray();
+  } else {
+    highScorersArr = JSON.parse(localStorage.getItem('scoreList'));
+    cleanScorersArray();
   }
 
   // Clear main and display Question screens
@@ -508,7 +450,6 @@ startQuizBtn.addEventListener("click", function (event) {
   // Display the first question and start the timer
   processQuestion();
   startTestTimer();
-  //debugger; 
 })
 
 // Event listenters for answer buttons clicked.
@@ -544,4 +485,9 @@ goBackBtn.addEventListener("click", function (event) {
 clearHighScoresBtn.addEventListener("click", function (event) {
   event.stopPropagation();
   processClearHighScores();
+})
+
+viewHighScoresBtn.addEventListener("click",function(event) {
+  event.stopPropagation();
+  processViewHighScores();
 })
