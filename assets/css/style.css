@@ -3,6 +3,7 @@
     color: pink;
   }
 
+  /* Buttons */
   #startQuizBtn {
     padding: 10px;
     margin: 24px;
@@ -29,6 +30,20 @@
     border-radius: 1rem;
   }
 
+  #reply1,
+  #reply2,
+  #reply3,
+  #reply4 {
+    display: block;
+    color: white;
+    background-color: darkblue;
+    padding: 10px;
+    font-size: 24px;
+    border-radius: 1rem;
+    margin-bottom: .5rem;
+  }
+
+  /* Header aesthetics */
   header {
     display: flex;
     flex-wrap: wrap;
@@ -41,6 +56,8 @@
     margin: 0;
   }
 
+  /* Different "screens": main screen, question and answer screen, quiz complete screen,
+    high scores screen. This provides the visibiilty of the screens in addition to their style */
   .startContainer {
     background-color: pink;
     color: black;
@@ -77,15 +94,4 @@
     font-size: 2rem;
   }
 
-  #reply1,
-  #reply2,
-  #reply3,
-  #reply4 {
-    display: block;
-    color: white;
-    background-color: darkblue;
-    padding: 10px;
-    font-size: 24px;
-    border-radius: 1rem;
-    margin-bottom: .5rem;
-  }
+  

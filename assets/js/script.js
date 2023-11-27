@@ -5,16 +5,18 @@ var allDoneContainerEl = document.querySelector(".allDoneContainer");
 var highScoresContainerEl = document.querySelector(".highScoresContainer");
 
 // Local storage set up.
-var highScorers;  // 2D array for initials and score [initialsA,scoreA],[initialsB,scoreB]
+var highScorersArr=[];  // 2D array for initials and score [initialsA,scoreA],[initialsB,scoreB]
 var numberOfScores = 0;  // number of scores recorded
 var currentFinalScore = 0;
 var currentInitials = "";
-var scoresArr = JSON.parse(localStorage.getItem('scoreList'));
+var scoresLS = JSON.parse(localStorage.getItem('scoreList'));
 
 // Timer values
 const MAX_QUIZ_TIME = 300; // quiz timer in seconds
 var secondsLeft = MAX_QUIZ_TIME;
 var stopTimer = false;  // set to true when quiz is complete before timer is up
+var timeLeftDisplayEl = document.getElementById("#timeLeftDisplay");
+var initialTimeLeftDisplay = timeLeftDisplayEl.textContent;
 
 // Buttons we will listen for.
 var startQuizBtn = document.querySelector("#startQuizBtn");
@@ -25,10 +27,6 @@ var answerDBtn = document.querySelector("#reply4");
 var formSubmitBtn = document.querySelector("#formSubmit");
 var goBackBtn = document.querySelector("#goBack");
 var clearHighScoresBtn = document.querySelector("#clearHighScores");
-
-// Upper right corner timer display
-var timeLeftDisplayEl = document.getElementById("#timeLeftDisplay");
-var initialTimeLeftDisplay = timeLeftDisplayEl.textContent;
 
 // The quiz is stored here;
 const NUMBER_OF_QUESTIONS = 5;
@@ -46,7 +44,7 @@ var answerChoices = [["var x = 1;", "var if;", "var functionName = function(){};
 var correctAnswers = ["B", "C", "B", "A", "D"];
 
 // This function displays the current time remaining on the 
-// quiz timer (time left).
+// quiz timer (time left, upper left corner).
 function displayTimeRemaining() {
   //   debugger;
   //   console.log("time remaining " + secondsLeft);
@@ -55,7 +53,8 @@ function displayTimeRemaining() {
 }
 
 // This function starts the quiz timer, monitors for it to run out, and
-// displays time remaining.
+// displays time remaining. This function can be called with global variable stopTimer
+// to stop the timer and clear the interval. 
 function startTestTimer() {
   var timerInterval = setInterval(function () {
 
@@ -92,6 +91,8 @@ function processAnswerIncorrect() {
 // Whether the answer was correct or incorrect.
 function setAnswerStatusText(results) {
   console.log("setanswerstatustext - results = " + results);
+  element = document.getElementById("answerStatusText");
+  element.textContent = "Results: " + results;
 };
 
 // This section of functions will process answers A through D and determine
@@ -208,6 +209,8 @@ function processAnswerD() {
   }*/
 }
 
+/* This set of functions process clearing all of the different screens:
+main, question and answer, all done screen, high scores */
 function clearMainScreen() {
   //debugger;
   console.log("CLEAR SCREEN");
@@ -269,6 +272,8 @@ function clearAllDoneScreen() {
   //document.getElementsByClassName('startContainerOn').style.display = 'none';
 }
 
+/* This set of functions process displaying all of the different screens:
+main, question and answer, all done screen, high scores */
 // Display the question on the screen.
 function processQuestion() {
 
@@ -281,6 +286,11 @@ function processQuestion() {
     console.log("displaying question " + currentQuestion);
     console.log("display question" + questions[currentQuestion]);
     //debugger;
+    // set up question
+    element =document.getElementById("questionText");
+    element.textContent = questions[currentQuestion];
+
+    // set up answer choices
     element = document.getElementById("reply1");
     element.textContent = answerChoices[currentQuestion][0];
     element = document.getElementById("reply2");
@@ -319,29 +329,51 @@ function highScoresDisplay() {
   clearAllDoneScreen();
 
   // Get the current list of high scores, sort and display the top 5
-  highScorers = localStorage.getItem('scoreList');
-  console.log ("in high score display " + highScorers);
+  highScorersArr = localStorage.getItem('scoreList');
+  console.log ("in high score display " + highScorersArr);
 
   console.log("on high scores screen");
-
+  //var sortedHighScorersArr = highScorersArr.toSorted();
+    //highScorersArr.sort(firstItem,SecondItem)=> firstIem.grade - secondItem.grade);
 }
 
 // Remove any blank names (initials) elements from the scores array
-function cleanScoresArray() {
-  for (var i = 0; i<scoresArr.length; i++ ) {
-console.log("in for " + i + " " + scoresArr[i]); 
-console.log("in for " + i + " " + scoresArr[i][0]);
-console.log("in for " + i + " " + scoresArr[i][1]);
-if ((scoresArr[i][0] == "") || (scoresArr[i][0] == null)) {
+function cleanScorersArray() {
+  for (var i = 0; i<highScorersArr.length; i++ ) {
+console.log("in for " + i + " " + highScorersArr[i]); 
+console.log("in for " + i + " " + highScorersArr[i][0]);
+console.log("in for " + i + " " + highScorersArr[i][1]);
+if ((highScorersArr[i][0] == "") || (highScorersArr[i][0] == null)) {
   console.log('remove the thing');
-  scoresArr.splice(i,i);
-  console.log("spliced " + scoresArr);
+  highScorersArr.splice(i,i);
+  console.log("spliced " + highScorersArr);
 } 
-console.log("out for " + i + " " + scoresArr[i]); 
-console.log("out for " + i + " " + scoresArr[i][0]);
-console.log("out for " + i + " " + scoresArr[i][1]);
+console.log("out for " + i + " " + highScorersArr[i]); 
+console.log("out for " + i + " " + highScorersArr[i][0]);
+console.log("out for " + i + " " + highScorersArr[i][1]);
   }
 }
+
+/* Save the current score and initials into local storage */
+function processHighScores() {
+  console.log ("in process high scores");
+    currentInitials = allDoneContainerEl.children[2].children[0].value;
+    debugger;
+  
+    // put current score and initials into the high scorers array and push it onto local storage
+    // for future use.
+    highScorersArr.push([currentInitials,currentFinalScore]);
+    localStorage.setItem('scoreList',JSON.stringify(highScorersArr));
+    console.log("initials in submit =" + currentInitials);
+    //processHighScores();
+  
+    // display the high scores
+    clearAllDoneScreen();
+    highScoresDisplay();
+  
+  };
+
+// EVENT LISTENERS
 // Event listener for the Start Quiz button click
 startQuizBtn.addEventListener("click", function (event) {
   event.stopPropagation;
@@ -358,7 +390,8 @@ startQuizBtn.addEventListener("click", function (event) {
   allDoneContainerEl.setAttribute("hidden", "true"); // all done is hidden
   highScoresContainerEl.setAttribute("hidden", "true");  // high scores is hidden
   clearMainScreen();
-  cleanScoresArray();
+  highScorersArr = JSON.parse(localStorage.getItem('scoreList'));
+  cleanScorersArray();
 
   // Display the first question and start the timer
   processQuestion();
@@ -384,21 +417,19 @@ answerDBtn.addEventListener("click", function (event) {
   processAnswerD();
 })
 
-function processHighScores() {
-console.log ("in process high scores");
-  currentInitials = allDoneContainerEl.children[2].children[0].value;
-  //debugger;
-  highScorers.push([currentInitials.toUpperCase(),currentFinalScore]);
-  localStorage.setItem('scoreList',JSON.stringify(highScorers));
-  console.log("initials in submit =" + currentInitials);
-  //processHighScores();
-  clearAllDoneScreen();
-  highScoresDisplay();
-
-};
-
+// Event listener for submit in the all done screen
  formSubmitBtn.addEventListener("click", function (event) {
   event.stopPropagation();
   processHighScores();
  });
 
+ // Event listeners for the goBack and clearHighScores buttons in high score display
+  goBackBtn.addEventListener("click", function(event) {
+  event.stopPropagation();
+  processGoBack();
+})
+
+ clearHighScoresBtn.addEventListener("click", function(event) {
+  event.stopPropagation();
+  processClearHighScores();
+})
