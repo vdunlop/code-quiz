@@ -383,7 +383,6 @@ function processHighScores() {
 
 function processViewHighScores(){
  // Turn off the displays
- debugger;
  element = document.getElementById('clearMainContainer');
  element.style.display = 'none';
  startContainerEl.setAttribute("hidden", "true"); // main screen is visible
@@ -392,7 +391,6 @@ function processViewHighScores(){
 
  allDoneContainerEl.setAttribute("hidden", "true"); // all done is hidden
 
- //highScoresContainerEl.setAttribute("hidden", "true");  // high scores is hidden
  highScoresDisplay();
 }
 function processGoBack() {
@@ -476,7 +474,7 @@ formSubmitBtn.addEventListener("click", function (event) {
   processHighScores();
 });
 
-// Event listeners for the goBack and clearHighScores buttons in high score display
+// Event listeners for the goBack and clearHighScores and viewHighScores buttons
 goBackBtn.addEventListener("click", function (event) {
   event.stopPropagation();
   processGoBack();
