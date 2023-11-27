@@ -5,7 +5,7 @@ var allDoneContainerEl = document.querySelector(".allDoneContainer");
 var highScoresContainerEl = document.querySelector(".highScoresContainer");
 
 // Local storage set up.
-var highScorersArr=[];  // 2D array for initials and score [initialsA,scoreA],[initialsB,scoreB]
+var highScorersArr = [];  // 2D array for initials and score [initialsA,scoreA],[initialsB,scoreB]
 var numberOfScores = 0;  // number of scores recorded
 var currentFinalScore = 0;
 var currentInitials = "";
@@ -295,7 +295,7 @@ function processQuestion() {
     console.log("display question" + questions[currentQuestion]);
     //debugger;
     // set up question
-    element =document.getElementById("questionText");
+    element = document.getElementById("questionText");
     element.textContent = questions[currentQuestion];
 
     // set up answer choices
@@ -335,88 +335,100 @@ function highScoresDisplay() {
 
   // Hide the all done screen and display the high scores screen
   clearAllDoneScreen();
-debugger;
+  debugger;
   // Get the current list of high scores, sort and display the top 5
   highScorersArr = JSON.parse(localStorage.getItem('scoreList'));
-  console.log ("in high score display " + highScorersArr);
+  console.log("in high score display " + highScorersArr);
 
   console.log("on high scores screen");
-  //var sortedHighScorersArr = highScorersArr.toSorted();
-    //highScorersArr.sort(firstItem,SecondItem)=> firstIem.grade - secondItem.grade);
-li1.textContent = highScorersArr[0];
-li2.textContent = highScorersArr[1];
-li3.textContent = highScorersArr[2];
-li4.textContent = highScorersArr[3];
-li5.textContent = highScorersArr[4];
 
-listEl.appendChild(li1);
-listEl.appendChild(li2);
-listEl.appendChild(li3);
-listEl.appendChild(li4);
-listEl.appendChild(li5);
+  // Create <li>s for the top 5 scorers
+  li1.textContent = highScorersArr[0];
+  li2.textContent = highScorersArr[1];
+  li3.textContent = highScorersArr[2];
+  li4.textContent = highScorersArr[3];
+  li5.textContent = highScorersArr[4];
 
+  listEl.appendChild(li1);
+  listEl.appendChild(li2);
+  listEl.appendChild(li3);
+  listEl.appendChild(li4);
+  listEl.appendChild(li5);
+  listEl.setAttribute("style", "background-color:lightblue; color:black;font-size:1.5rem;padding:.5rem");
 }
 
 // Remove any blank names (initials) elements from the scores array
 function cleanScorersArray() {
-  for (var i = 0; i<highScorersArr.length; i++ ) {
-console.log("in for " + i + " " + highScorersArr[i]); 
-console.log("in for " + i + " " + highScorersArr[i][0]);
-console.log("in for " + i + " " + highScorersArr[i][1]);
-if ((highScorersArr[i][0] == "") || (highScorersArr[i][0] == null)) {
-  console.log('remove the thing');
-  highScorersArr.splice(i,i);
-  console.log("spliced " + highScorersArr);
-} 
-console.log("out for " + i + " " + highScorersArr[i]); 
-console.log("out for " + i + " " + highScorersArr[i][0]);
-console.log("out for " + i + " " + highScorersArr[i][1]);
+  for (var i = 0; i < highScorersArr.length; i++) {
+    console.log("in for " + i + " " + highScorersArr[i]);
+    console.log("in for " + i + " " + highScorersArr[i][0]);
+    console.log("in for " + i + " " + highScorersArr[i][1]);
+    if ((highScorersArr[i][0] == "") || (highScorersArr[i][0] == null)) {
+      console.log('remove the thing');
+      highScorersArr.splice(i, i);
+      console.log("spliced " + highScorersArr);
+    }
+    console.log("out for " + i + " " + highScorersArr[i]);
+    console.log("out for " + i + " " + highScorersArr[i][0]);
+    console.log("out for " + i + " " + highScorersArr[i][1]);
   }
 }
 
 /* Save the current score and initials into local storage */
 function processHighScores() {
-  console.log ("in process high scores");
-    currentInitials = allDoneContainerEl.children[2].children[0].value;
-    debugger;
-  
-    // put current score and initials into the high scorers array and push it onto local storage
-    // for future use.
-    highScorersArr.push([currentInitials,currentFinalScore]);
-    localStorage.setItem('scoreList',JSON.stringify(highScorersArr));
-    console.log("initials in submit =" + currentInitials);
-    //processHighScores();
-  
-    // display the high scores
-    clearAllDoneScreen();
-    highScoresDisplay();
-  
-  };
+  console.log("in process high scores");
+  currentInitials = allDoneContainerEl.children[2].children[0].value;
+  debugger;
 
-// EVENT LISTENERS
-// Event listener for the Start Quiz button click
-startQuizBtn.addEventListener("click", function (event) {
-  event.stopPropagation;
+  // put current score and initials into the high scorers array and push it onto local storage
+  // for future use.
+  highScorersArr.push([currentInitials, currentFinalScore]);
+  localStorage.setItem('scoreList', JSON.stringify(highScorersArr));
+  console.log("initials in submit =" + currentInitials);
+  //processHighScores();
 
-  // Reset variables for the Start Quiz button being clicked a second, etc time
-  secondsLeft = MAX_QUIZ_TIME; // Reset the timer.
-  currentQuestion = 0;  // Reset the current question.
-  //debugger;
+  // display the high scores
+  clearAllDoneScreen();
+  highScoresDisplay();
 
-  // At start, main screen is visible and all other screens are hidden
-  // INITIALIZE
-  startContainerEl.setAttribute("hidden", "false"); // main screen is visible
-  questionContainerEl.setAttribute("hidden", "true"); // questions are hidden
-  allDoneContainerEl.setAttribute("hidden", "true"); // all done is hidden
-  highScoresContainerEl.setAttribute("hidden", "true");  // high scores is hidden
-  clearMainScreen();
-  highScorersArr = JSON.parse(localStorage.getItem('scoreList'));
-  cleanScorersArray();
+};
 
-  // Display the first question and start the timer
+function processGoBack () {
+  initialize();
+}
+
+function processClearHighScores() {
+  localStorage.removeItem('scoreList');
+  initialize();
+}
+
+function initialize() {
+   // Reset variables for the Start Quiz button being clicked a second, etc time
+   secondsLeft = MAX_QUIZ_TIME; // Reset the timer.
+   currentQuestion = 0;  // Reset the current question.
+   //debugger;
+ 
+   // At start, main screen is visible and all other screens are hidden
+   // INITIALIZE
+   startContainerEl.setAttribute("hidden", "false"); // main screen is visible
+   questionContainerEl.setAttribute("hidden", "true"); // questions are hidden
+   allDoneContainerEl.setAttribute("hidden", "true"); // all done is hidden
+   highScoresContainerEl.setAttribute("hidden", "true");  // high scores is hidden
+   clearMainScreen();
+   highScorersArr = JSON.parse(localStorage.getItem('scoreList'));
+   cleanScorersArray();
+    // Display the first question and start the timer
   processQuestion();
   startTestTimer();
   //debugger;
+}
+
+// EVENT LISTENERS
+// Event listener for the Start Quiz button click
+  startQuizBtn.addEventListener("click", function (event) {
+  event.stopPropagation;
+  initialize();
+ 
 })
 
 // Event listenters for answer buttons clicked.
@@ -438,18 +450,18 @@ answerDBtn.addEventListener("click", function (event) {
 })
 
 // Event listener for submit in the all done screen
- formSubmitBtn.addEventListener("click", function (event) {
+formSubmitBtn.addEventListener("click", function (event) {
   event.stopPropagation();
   processHighScores();
- });
+});
 
- // Event listeners for the goBack and clearHighScores buttons in high score display
-  goBackBtn.addEventListener("click", function(event) {
+// Event listeners for the goBack and clearHighScores buttons in high score display
+goBackBtn.addEventListener("click", function (event) {
   event.stopPropagation();
   processGoBack();
 })
 
- clearHighScoresBtn.addEventListener("click", function(event) {
+clearHighScoresBtn.addEventListener("click", function (event) {
   event.stopPropagation();
   processClearHighScores();
 })
